@@ -1,0 +1,93 @@
+#	COLORS
+NOC         = \033[0m
+GREEN       = \033[1;32m
+RED         = \033[1;31m
+BLUE        = \033[0;94m
+
+#	NAME
+NAME=libft.a
+
+#	PATH
+SRC_PATH = ./src/
+OBJ_PATH = ./objs/
+INC_PATH = ./includes/
+
+#	SRC
+SRC_NAME =	ft_atoi.c 				\
+			ft_bzero.c 				\
+			ft_calloc.c 			\
+			ft_isalnum.c 			\
+			ft_isalpha.c 			\
+			ft_isascii.c 			\
+			ft_isdigit.c 			\
+			ft_isprint.c 			\
+			ft_itoa.c 				\
+			ft_memchr.c				\
+			ft_memcmp.c				\
+			ft_memcpy.c 			\
+			ft_memmove.c 			\
+			ft_memset.c 			\
+			ft_putchar_fd.c 		\
+			ft_putendl_fd.c 		\
+			ft_putnbr_fd.c 			\
+			ft_putstr_fd.c 			\
+			ft_split.c 				\
+			ft_strchr.c 			\
+			ft_strcjoin.c			\
+			ft_strdel.c 			\
+			ft_strdup.c 			\
+			ft_strichr.c			\
+			ft_strintlen.c			\
+			ft_striteri.c 			\
+			ft_strjoin.c 			\
+			ft_memdel.c 			\
+			ft_strlcat.c 			\
+			ft_strlcpy.c 			\
+			ft_strlen.c 			\
+			ft_strmapi.c 			\
+			ft_strncmp.c 			\
+			ft_strndup.c			\
+			ft_strnstr.c 			\
+			ft_strrchr.c			\
+			ft_strsub.c 			\
+			ft_strtok.c 			\
+			ft_strtrim.c 			\
+			ft_substr.c 			\
+			ft_tolower.c 			\
+			ft_toupper.c 			\
+
+OBJ_NAME = $(SRC_NAME:.c=.o)
+INC_NAME = $(INC_PATH)libft.h
+
+#	FILES
+SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
+OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
+
+#	FLAGS
+CC = gcc $(CFLAGS)
+CFLAGS = -Wall -Wextra -Werror
+
+all: $(NAME)
+
+$(OBJ_PATH)%.o : $(SRC_PATH)%.c $(INC_NAME)
+	@mkdir -p $(OBJ_PATH)
+	@$(CC) -c $< -o $@
+	@echo "$(BLUE)[$(NAME)]$(NOC) $@ created."
+
+$(NAME): $(OBJ)
+	@ar crs $(NAME) $(OBJ)
+	@echo "$(BLUE)[$(NAME)]$(NOC) $@ created."
+
+clean:
+	@rm -rf $(OBJ_PATH)
+	@echo "$(BLUE)[$(NAME)]$(NOC) $@ .o files deleted."
+
+fclean: clean
+	@rm -f $(NAME)
+	@echo "$(BLUE)[$(NAME)]$(NOC) $@ deleted."
+
+ffclean:
+	@rm -f $(NAME)
+	@echo "$(BLUE)[$(NAME)]$(NOC) $@ deleted."
+
+re: fclean all
