@@ -2,10 +2,10 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Imlx_linux -I/usr/include -I/usr/include/X11 -I$(INC_DIR) -I$(LIBFT_DIR)/includes
 
 # Linker flags
-LDFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+LDFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -L$(LIBFT_DIR) -lft
 
 # Directories
 SRC_DIR = srcs
@@ -54,30 +54,30 @@ $(LIBFT): $(LIBFT_SRCS) $(LIBFT_HEADER)
 
 $(NAME): $(LIBFT) $(OBJS)
 	@$(MAKE) -C mlx_linux -s
-	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft $(LDFLAGS) -o $@
+	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
 	@echo "$(GREEN)[$(NAME)]$(RESET) $@ created."
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER) $(HEADER_GNL) $(LIBFT_HEADER)
 	@mkdir -p $(OBJ_DIR)/$(dir $*)
-	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR)/includes -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(GREEN)[$(NAME)]$(RESET) $@ created."
 
 bonus: $(BONUS_NAME)
 
 $(BONUS_NAME): $(LIBFT) $(OBJS_BONUS)
 	@$(MAKE) -C mlx_linux -s
-	@$(CC) $(CFLAGS) $(OBJS_BONUS) -L$(LIBFT_DIR) -lft $(LDFLAGS) -o $@
+	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(LDFLAGS) -o $@
 	@echo "$(YELLOW)[$(BONUS_NAME)]$(RESET) $@ created."
 
 $(OBJ_DIR_BONUS)/%.o: $(SRC_DIR_BONUS)/%.c $(HEADER_BONUS) $(HEADER_GNL) $(LIBFT_HEADER)
 	@mkdir -p $(OBJ_DIR_BONUS)/$(dir $*)
-	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR)/includes -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(YELLOW)[$(BONUS_NAME)]$(RESET) $@ created."
 
 clean:
 	@$(RM) -r $(OBJ_DIR) $(OBJ_DIR_BONUS)
 	@$(MAKE) -C $(LIBFT_DIR) clean -s
-	@$(MAKE) -C mlx_linux -s
+	@$(MAKE) -C mlx_linux -s clean
 	@echo "$(GREEN)[$(NAME)]$(RESET) $@ .o files deleted."
 
 fclean: clean
